@@ -1,0 +1,53 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '4.0.1'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.kummari'
+version = '0.0.1-SNAPSHOT'
+description = 'to book the room in online'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// Web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // MyBatis
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+
+
+    // PostgreSQL Driver
+    implementation 'org.postgresql:postgresql:42.7.1'
+
+    // Validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Security (If login needed)
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // JSON
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+    // Testing
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+ 
+    implementation 'org.springframework.security:spring-security-crypto:6.2.1'
+    
+ 
+ 
+ }
+
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
