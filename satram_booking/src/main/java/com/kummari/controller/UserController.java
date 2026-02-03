@@ -7,6 +7,8 @@ import com.kummari.dto.RegisterRequest;
 import com.kummari.model.User;
 import com.kummari.service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -18,7 +20,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(@RequestBody RegisterRequest request) {
+    public String register(@Valid @RequestBody RegisterRequest request) {
     	
     	System.out.println("welcome to API");
         return userService.register(request);
@@ -26,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public Object login(@RequestBody LoginRequest request) {
+    public Object login(@Valid @RequestBody LoginRequest request) {
         User user = userService.login(request);
         return user != null ? user : "Invalid credentials";
     }

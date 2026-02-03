@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 
 import com.kummari.dto.LoginRequest;
 import com.kummari.dto.RegisterRequest;
+import com.kummari.exception.EmailAlreadyExistsException;
+import com.kummari.exception.InvalidCredentialsException;
+import com.kummari.exception.UserNotFoundException;
 import com.kummari.model.User;
 import com.kummari.repository.UserRepository;
 
@@ -20,7 +23,7 @@ public class UserService {
 
     public String register(RegisterRequest request) {
     	if (userRepository.findByEmail(request.getEmail()) != null) {
-            return "Email already registered";
+            throw new EmailAlreadyExistsException("Email already registered");
         }
 
         User user = new User();
@@ -34,14 +37,22 @@ public class UserService {
     }
 
     public User login(LoginRequest request) {
-        User user = userRepository.findByEmail(request.getEmail());
-        if (user != null && encoder.matches(request.getPassword(), user.getPassword())) {
-            return user;
+    	User user = userRepository.findByEmail(request.getEmail());
+
+        if (user == null) {
+            throw new UserNotFoundException("User not found");
         }
-        return null;
+
+        if (!encoder.matches(request.getPassword(), user.getPassword())) {
+            throw new InvalidCredentialsException("Invalid email or password");
+        }
+
+        return user;
     }
 
     public User getUser(Long id) {
-        return userRepository.findById(id).orElse(null);
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id " + id));
+        
     }
 }
