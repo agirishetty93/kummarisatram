@@ -24,6 +24,8 @@ dependencies {
 
     // MyBatis
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+    
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 
     // PostgreSQL Driver
@@ -42,6 +44,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
  
     implementation 'org.springframework.security:spring-security-crypto:6.2.1'
+    
+    runtimeOnly 'org.postgresql:postgresql'
     
  
  
